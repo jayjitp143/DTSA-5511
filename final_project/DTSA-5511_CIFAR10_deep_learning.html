@@ -8403,9 +8403,38 @@ Validation data shape: (10000, 32, 32, 3)
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Baseline-CNN-Model">Baseline CNN Model<a class="anchor-link" href="#Baseline-CNN-Model">¶</a></h3><ul>
-<li></li>
+<h3 id="Baseline-CNN-Model">Baseline CNN Model<a class="anchor-link" href="#Baseline-CNN-Model">¶</a></h3><p>The baseline CNN model is designed for classifying the CIFAR-10 dataset, which consists of 60,000 32×32 color images across 10 different classes. This model implements a straightforward convolutional neural network architecture that balances simplicity with reasonable performance expectations.</p>
+<h2 id="Convolutional-Blocks">Convolutional Blocks<a class="anchor-link" href="#Convolutional-Blocks">¶</a></h2><p><strong>First Convolutional Block</strong></p>
+<ul>
+<li>32 convolutional filters with 3×3 kernel size</li>
+<li>ReLU activation function</li>
+<li>'same' padding to preserve spatial dimensions</li>
+<li>2×2 max pooling, reducing dimensions to 16×16</li>
 </ul>
+<p><strong>Second Convolutional Block</strong></p>
+<ul>
+<li>64 convolutional filters with 3×3 kernel size</li>
+<li>ReLU activation function</li>
+<li>'same' padding to preserve spatial dimensions</li>
+<li>2×2 max pooling, reducing dimensions to 8×8</li>
+</ul>
+<h2 id="Classification-Layers">Classification Layers<a class="anchor-link" href="#Classification-Layers">¶</a></h2><p><strong>Flatten Layer</strong></p>
+<p>Transforms the 8×8×64 feature maps into a 4,096-dimension vector.</p>
+<p><strong>Dense Hidden Layer</strong></p>
+<ul>
+<li>64 neurons with ReLU activation</li>
+<li>Creates a compact representation of extracted features</li>
+</ul>
+<p><strong>Dropout Layer</strong></p>
+<ul>
+<li>Rate of 0.5 (50% of neurons randomly deactivated during training)</li>
+<li>Prevents overfitting by forcing network redundancy</li>
+</ul>
+<h2 id="Output-Layer">Output Layer<a class="anchor-link" href="#Output-Layer">¶</a></h2><p><strong>10 neurons (one per CIFAR-10 class)</strong></p>
+<p>Softmax activation for probability distribution across classes</p>
+<h2 id="Model-Configuration">Model Configuration<a class="anchor-link" href="#Model-Configuration">¶</a></h2><p><strong>Loss Function:</strong> Categorical crossentropy (standard for multi-class classification)</p>
+<p><strong>Optimizer:</strong> Adam with configurable learning rate (tested at 0.001 and 0.0001)</p>
+<p><strong>Evaluation Metric:</strong> Accuracy</p>
 </div>
 </div>
 </div>
@@ -8436,23 +8465,6 @@ Validation data shape: (10000, 32, 32, 3)
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h4 id="Model-Building">Model Building<a class="anchor-link" href="#Model-Building">¶</a></h4>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=139981c4-7718-4e9c-983d-2112625a3bb8">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Observations:</strong></p>
-<ul>
-<li>Baseline CNN model created with 3 convolution layers having 32, 64 &amp; 128 layers respectively.</li>
-<li>'relu' activation function have been used for all 3 convolution layers with padding as 'same'.</li>
-<li>1 hidden dense layer have been used with 128 neurons &amp; activation function as 'relu' and output layer with 10 neurons activation 'softmax' respectively.</li>
-<li>CNN model is compiled with 'Adam' optimizer with learning_rate of 0.001 with loss function as 'binary_crossentropy' and 'accuracy' as evaluation matrix.</li>
-</ul>
 </div>
 </div>
 </div>
@@ -9488,7 +9500,12 @@ F1 Score: 0.6786
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Hyper-parameter-Tuning-on-Baseline-CNN-Model">Hyper-parameter Tuning on Baseline CNN Model<a class="anchor-link" href="#Hyper-parameter-Tuning-on-Baseline-CNN-Model">¶</a></h2>
+<h2 id="Hyper-parameter-Tuning-on-Baseline-CNN-Model">Hyper-parameter Tuning on Baseline CNN Model<a class="anchor-link" href="#Hyper-parameter-Tuning-on-Baseline-CNN-Model">¶</a></h2><p>Baseline CNN Model is evaluated with below hyperparameter combinations—</p>
+<ul>
+<li>Learning rates: 0.001 and 0.0001</li>
+<li>Batch sizes: 64 and 128</li>
+<li>Dropout rates: 0.25 and 0.5</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10134,20 +10151,6 @@ Validation Accuracy: 0.6572
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Non-trainable params: </span><span style="color: #00af00; text-decoration-color: #00af00">0</span> (0.00 B)
 </pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e6de3a7a-0362-43c9-8fd0-e7be851ee3e5">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span> 
-</pre></div>
 </div>
 </div>
 </div>
@@ -11365,7 +11368,7 @@ F1 Score: 0.6757
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Summary-of-Results">Summary of Results<a class="anchor-link" href="#Summary-of-Results">¶</a></h2><p>Based on our experiments with the CIFAR-10 dataset, we can draw the following conclusions:</p>
+<h2 id="Summary-of-Results">Summary of Results<a class="anchor-link" href="#Summary-of-Results">¶</a></h2><p>Based on my experiments with the CIFAR-10 dataset, I can draw the following conclusions:</p>
 <ol>
 <li><p><strong>Model Performance:</strong></p>
 <ul>
@@ -11397,20 +11400,6 @@ F1 Score: 0.6757
 </li>
 </ol>
 <h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">¶</a></h2><p>Overall, my deep learning approach demonstrated strong performance on the CIFAR-10 image classification task, with my hyperparameter tuned model achieving competitive results through architectural improvements and proper regularization techniques.</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=dbbafecd-7df2-401c-ab3b-96624d4aa977">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-</div>
 </div>
 </div>
 </div>
